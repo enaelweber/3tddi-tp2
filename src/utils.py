@@ -31,3 +31,14 @@ def clamp(value: float, min_value: float, max_value: float) -> float:
     if min_value > max_value:
         raise ValueError("min_value must be <= max_value")
     return max(min_value, min(value, max_value))
+
+
+def sort_students(
+    students: list[dict] | None,
+    sort_by: str,
+    order: str = "asc",
+) -> list[dict]:
+    """Retourne une nouvelle liste triée (l'original n'est pas modifié)."""
+    if not students:
+        return []
+    return sorted(students, key=lambda s: s[sort_by], reverse=(order == "desc"))

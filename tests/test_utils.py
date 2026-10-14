@@ -1,6 +1,6 @@
 import pytest
 
-from src.utils import calculate_average, capitalize, clamp, slugify
+from src.utils import calculate_average, capitalize, clamp, slugify, sort_students
 
 
 # ---------- capitalize ----------
@@ -207,3 +207,61 @@ def test_should_handle_floats_and_extreme_values_when_clamping(value, low, high,
 def test_should_raise_value_error_when_min_is_greater_than_max(low, high):
     with pytest.raises(ValueError, match="min_value"):
         clamp(5, low, high)
+
+
+# ---------- sort ----------
+
+
+@pytest.fixture
+def students():
+    return [
+        {"name": "Charlie", "grade": 12, "age": 22},
+        {"name": "Alice", "grade": 17, "age": 20},
+        {"name": "Bob", "grade": 9, "age": 21},
+    ]
+
+
+def test_should_sort_students_by_grade_ascending(students):
+    result = sort_students(students, "grade", "asc")
+
+    assert [s["name"] for s in result] == ["Bob", "Charlie", "Alice"]
+
+
+def test_should_sort_students_by_grade_descending(students):
+    result = sort_students(students, "grade", "desc")
+
+    assert [s["name"] for s in result] == ["Alice", "Charlie", "Bob"]
+
+
+def test_should_sort_students_by_name_ascending(students):
+    result = sort_students(students, "name", "asc")
+
+    assert [s["name"] for s in result] == ["Alice", "Bob", "Charlie"]
+
+
+def test_should_sort_students_by_age_ascending(students):
+    result = sort_students(students, "age", "asc")
+
+    assert [s["name"] for s in result] == ["Alice", "Bob", "Charlie"]
+
+
+def test_should_return_empty_list_when_students_is_none():
+    assert sort_students(None, "grade", "asc") == []
+
+
+def test_should_return_empty_list_when_students_is_empty():
+    assert sort_students([], "grade", "asc") == []
+
+
+def test_should_not_modify_original_list(students):
+    original = [dict(s) for s in students]
+
+    sort_students(students, "grade", "asc")
+
+    assert students == original
+
+
+def test_should_default_to_ascending_order(students):
+    result = sort_students(students, "grade")
+
+    assert [s["name"] for s in result] == ["Bob", "Charlie", "Alice"]
