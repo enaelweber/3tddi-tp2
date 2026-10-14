@@ -4,21 +4,16 @@ version = "0.1.0"
 requires-python = ">=3.11"
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["."]
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["src/app"]
+source = ["src"]
 branch = true
-
-[tool.coverage.report]
-show_missing = true
-# fail_under = 80   ← on l'activera en B3
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["src", "tests"]
 
 [tool.ruff.lint]
 # E/W : style, F : imports et variables inutilisés, I : tri des imports,
