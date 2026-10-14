@@ -1,0 +1,27 @@
+[project]
+name = "TP2"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src/app"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+# fail_under = 80   ← on l'activera en B3
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# E/W : style, F : imports et variables inutilisés, I : tri des imports,
+# B : bugs probables, UP : syntaxe moderne, SIM : simplifications,
+# ERA : code commenté (code mort)
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "ERA"]
